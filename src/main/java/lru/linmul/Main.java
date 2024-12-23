@@ -2,6 +2,7 @@ package lru.linmul;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        CSV csv = new CSV("data.csv");
+        System.out.println(csv.readAll().toString());
     }
 }
