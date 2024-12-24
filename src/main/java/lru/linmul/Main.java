@@ -1,10 +1,16 @@
 package lru.linmul;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.util.Date;
 
-public class Main {
+public class Main extends Application {
     public static void main(String[] args) {
-        CSV csv = new CSV("data.csv");
+      CSV csv = new CSV("data.csv");
         for (String[] row : csv.readAll()) {
             //String[] tempdate = row[6].split(" ")[0].split("-");
             Parking parking = new Parking(
@@ -29,5 +35,16 @@ public class Main {
         System.out.println(parking0.getMostOccupied());
 
         System.out.println(parking0.searchParking("Les Salines"));
+      
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lru/linmul/scene.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
