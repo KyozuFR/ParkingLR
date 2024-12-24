@@ -23,5 +23,11 @@ public class Main {
         for (Parking parking : Parking.getParkings()) {
             System.out.println(parking);
         }
+        Parking parking0 = Parking.getParkings().getFirst();
+        System.out.println(parking0.getLessOccupied());
+
+        System.out.println(parking0.getMostOccupied());
+
+        System.out.println(parking0.searchParking("Les Salines"));
     }
 }
