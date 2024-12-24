@@ -2,11 +2,9 @@ package lru.linmul;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class CSV {
@@ -24,7 +22,8 @@ public class CSV {
 
     public List<String[]> readAll() {
         try {
-            return reader.readAll();
+            List<String[]> allRows = reader.readAll();
+            return allRows.subList(1, allRows.size());
         } catch (IOException | CsvException e) {
             throw new RuntimeException(e);
         }
