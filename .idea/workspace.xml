@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceab7915-2a7f-469f-8116-92983afaae30" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/lru/linmul/map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Parking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/Parking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/SceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/SceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lru/linmul/Scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lru/linmul/Scene.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +38,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.*.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "5-interface-simplifiée",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -56,15 +57,29 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-23" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="lru.linmul.Main" />
       <module name="parkingLR" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-21.0.5\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Kyozu\.jdks\openjdk-23\javafx-sdk-21.0.5\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-23" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="parkingLR" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.Main" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -86,6 +101,7 @@
       <workItem from="1735048938960" duration="2382000" />
       <workItem from="1735059649715" duration="26208000" />
       <workItem from="1735134145864" duration="7782000" />
+      <workItem from="1735161077854" duration="2095000" />
     </task>
     <servers />
   </component>

@@ -91,10 +91,12 @@ public class SceneController {
             handleDataView( parkingNameToSort );
         } else if ( lessOccupied.isSelected() ) {
             Parking lessOccupiedParking = parkings.getLessOccupied();
-            handleDataView( lessOccupiedParking.getName() );
+            handleDataViewWR( lessOccupiedParking );
+            //handleDataView(lessOccupiedParking.getName());
         } else if ( mostOccupied.isSelected() ) {
             Parking mostOccupiedParking = parkings.getMostOccupied();
-            handleDataView( mostOccupiedParking.getName() );
+            handleDataViewWR( mostOccupiedParking );
+            //handleDataView(mostOccupiedParking.getName());
         }
     }
 
@@ -149,6 +151,20 @@ public class SceneController {
             }
         }
 
+        parkingTableView.setItems(viewTableParkingsList);
+    }
+
+    private void handleDataViewWR(Parking parking) {
+        //DataView Without Regex
+        if ( file == null ) { return; }
+        clearParkingsMarkers();
+
+        ObservableList<Parking> viewTableParkingsList = FXCollections.observableArrayList();
+
+
+
+        viewTableParkingsList.add( parking );
+        addParkingMarkerToMap( parking );
         parkingTableView.setItems(viewTableParkingsList);
     }
 

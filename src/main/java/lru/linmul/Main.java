@@ -35,6 +35,7 @@ public class Main extends Application {
 
         System.out.println(parking.searchParking("Les Salines"));*/
         launch(args);
+
     }
 
     @Override
