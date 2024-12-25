@@ -31,6 +31,15 @@ public class Parking {
     public static ArrayList<Parking> getParkings() {
         return parkings;
     }
+    public String getName() {
+        return this.name;
+    }
+    public int getCapacity() {
+        return this.capacity;
+    }
+    public int getOccupancy() {
+        return this.occupancy;
+    }
 
     public String toString() {
         return "Parking{" +

@@ -6,14 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Date;
-
 public class Main extends Application {
     public static void main(String[] args) {
-      CSV csv = new CSV("data.csv");
+        /**CSV csv = new CSV("C:/users/amaur/Downloads/od_parking_dispo.csv");
+        Parking parking = null;
         for (String[] row : csv.readAll()) {
             //String[] tempdate = row[6].split(" ")[0].split("-");
-            Parking parking = new Parking(
+            parking = new Parking(
                     row[0],
                     row[1],
                     Double.parseDouble(row[2]),
@@ -26,25 +25,26 @@ public class Main extends Application {
             );
         }
 
-        for (Parking parking : Parking.getParkings()) {
-            System.out.println(parking);
+        for (Parking p : Parking.getParkings()) {
+            System.out.println(p);
         }
-        Parking parking0 = Parking.getParkings().getFirst();
-        System.out.println(parking0.getLessOccupied());
 
-        System.out.println(parking0.getMostOccupied());
+        System.out.println(parking.getLessOccupied());
 
-        System.out.println(parking0.searchParking("Les Salines"));
-      
+        System.out.println(parking.getMostOccupied());
+
+        System.out.println(parking.searchParking("Les Salines"));*/
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lru/linmul/scene.fxml"));
+    public void start(Stage mainStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lru/linmul/Scene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        mainStage.setTitle("ParkingLR");
+        mainStage.setScene(scene);
+        mainStage.setResizable(false);
+        mainStage.show();
     }
 }

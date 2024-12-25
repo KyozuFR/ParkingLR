@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ceab7915-2a7f-469f-8116-92983afaae30" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lru/linmul/scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lru/linmul/scene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Parking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/Parking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/SceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/lru/linmul/scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lru/linmul/Scene.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,10 +19,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2qf4Ans9lpYF6emTe1kDKfIvbuB" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -31,14 +34,14 @@
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "1-base-interface-javafx",
+    "git-widget-placeholder": "5-interface-simplifiée",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
+    "settings.editor.selected.configurable": "preferences.editor",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -69,6 +72,8 @@
       <option name="presentableId" value="Default" />
       <updated>1735040158640</updated>
       <workItem from="1735040165282" duration="5352000" />
+      <workItem from="1735048938960" duration="2382000" />
+      <workItem from="1735059649715" duration="18905000" />
     </task>
     <servers />
   </component>
