@@ -1,71 +1,100 @@
 package lru.linmul;
 
+import com.sun.javafx.webkit.WebConsoleListener;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SceneController {
     @FXML private AnchorPane anchorPane;
     @FXML private TextField parkingField;
-    @FXML private Label filePathLabel;
+    @FXML private RadioButton all;
+    @FXML private RadioButton lessOccupied;
+    @FXML private RadioButton mostOccupied;
+    @FXML private WebView mapView;
     @FXML private TableView<Parking> parkingTableView;
     @FXML private TableColumn<Parking, String> nameColumn;
     @FXML private TableColumn<Parking, Integer> curPlaceColumn;
     @FXML private TableColumn<Parking, Integer> totalPlaceColumn;
-    @FXML private RadioButton all;
-    @FXML private RadioButton lessOccupied;
-    @FXML private RadioButton mostOccupied;
+    @FXML private Label filePathLabel;
 
+    private WebEngine webEngine;
     private File file = null;
     private Parking parkings = null;
     private String parkingNameToSort = "";
 
     @FXML
     public void initialize() {
-        Platform.runLater( () -> anchorPane.requestFocus() ); // Attend que la page soit prête
+        Platform.runLater(() -> anchorPane.requestFocus());
 
-        nameColumn.setCellValueFactory( new PropertyValueFactory<Parking, String>( "name" ) );
-        curPlaceColumn.setCellValueFactory( new PropertyValueFactory<Parking, Integer>( "occupancy" ) );
-        totalPlaceColumn.setCellValueFactory( new PropertyValueFactory<Parking, Integer>( "capacity" ) );
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        curPlaceColumn.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
+        totalPlaceColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+
+        // charger la carte
+        webEngine = mapView.getEngine();
+        webEngine.load(Objects.requireNonNull(getClass().getResource("/lru/linmul/map.html")).toExternalForm());
+
+        webEngine.setOnAlert(event -> {
+            String data = event.getData();
+            if (data.startsWith("markerClick:")) {
+                String parkingName = data.split(":")[1];
+                selectTableRowByCoordinates( parkingName );
+            } else {
+                System.out.println("Console log: " + data);
+            }
+        });
+
+        // Injecter un script pour rediriger console.log
+        webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
+                webEngine.executeScript(
+                        "console.log = function(message) {" +
+                                "    alert(message);" +
+                                "};"
+                );
+            }
+        });
+
+        // quand l'utilisateur clique sur une ligne du tableau
+        parkingTableView.getSelectionModel().selectedItemProperty().addListener(( observable, oldValue, newValue ) -> {
+            if (newValue != null) {
+                handleLineDataView( newValue );
+            }
+        });
     }
 
     @FXML
     private void handleParkingNameFilter() {
-        if ( file == null ) { return; }
-
         parkingNameToSort = parkingField.getText();
-
-        all.setSelected( true );
-        lessOccupied.setSelected( false );
-        mostOccupied.setSelected( false );
-
-        handleTableView( parkingNameToSort ); // vérifie si des radios boutons sont selectionnés pour afficher les parkings correspondants
+        handleRadioFilter(); // vérifie si des radios boutons sont selectionnés pour afficher les parkings correspondants
     }
 
     @FXML
     private void handleRadioFilter() {
         if ( file == null ) { return; }
 
-        parkingField.setText( "" );
-        parkingNameToSort = "";
-
         if ( all.isSelected() ) {
-            handleTableView( parkingNameToSort );
+            handleDataView( parkingNameToSort );
         } else if ( lessOccupied.isSelected() ) {
             Parking lessOccupiedParking = parkings.getLessOccupied();
-            handleTableView( lessOccupiedParking.getName() );
+            handleDataView( lessOccupiedParking.getName() );
         } else if ( mostOccupied.isSelected() ) {
             Parking mostOccupiedParking = parkings.getMostOccupied();
-            handleTableView( mostOccupiedParking.getName() );
+            handleDataView( mostOccupiedParking.getName() );
         }
     }
 
@@ -82,6 +111,7 @@ public class SceneController {
             String filePath = file.getPath();
             filePathLabel.setText( "Fichier selectionné: " + filePath );
 
+            // peupler la liste des parkings
             CSV csv = new CSV( filePath );
             for ( String[] row : csv.readAll() ) {
                 parkings = new Parking(
@@ -102,21 +132,65 @@ public class SceneController {
         }
     }
 
-    private void handleTableView(String parkingNameToSort) {
+    private void handleDataView(String parkingNameToSort) {
         if ( file == null ) { return; }
 
         ObservableList<Parking> viewTableParkingsList = FXCollections.observableArrayList();
 
         Pattern pattern = Pattern.compile( "^" + parkingNameToSort, Pattern.CASE_INSENSITIVE );
 
+        clearParkingsMarkers();
         for ( Parking parking : Parking.getParkings() ) {
             Matcher matcher = pattern.matcher( parking.getName() );
 
             if ( parkingNameToSort.isEmpty() || matcher.find() ) {
                 viewTableParkingsList.add( parking );
+                addParkingMarkerToMap( parking );
             }
         }
 
-        parkingTableView.setItems( viewTableParkingsList );
+        parkingTableView.setItems(viewTableParkingsList);
+    }
+
+    private void handleLineDataView( Parking parking ) {
+        if ( file == null ) { return; }
+
+        String script = String.format(
+                Locale.US,
+                "selectMarker(%f, %f)",
+                parking.getYlat(),
+                parking.getXlong()
+        );
+        webEngine.executeScript( script );
+    }
+
+    private void addParkingMarkerToMap(Parking parking) {
+        String script = String.format(
+                Locale.US,
+                "addMarker(%f, %f, '%s: (%d/%d) places')",
+                parking.getYlat(),
+                parking.getXlong(),
+                parking.getName(),
+                parking.getOccupancy(),
+                parking.getCapacity()
+        );
+        webEngine.executeScript(script);
+    }
+
+    @FXML
+    private void clearParkingsMarkers() {
+        String script = String.format(
+                Locale.US,
+                "clearMarkers()"
+        );
+        webEngine.executeScript( script );
+    }
+
+    private void selectTableRowByCoordinates(String parkingName) {
+        Parking parking = parkings.searchParking( parkingName );
+
+        if ( parkings.searchParking( parkingName ) != null ) {
+            parkingTableView.getSelectionModel().select( parking );
+        }
     }
 }

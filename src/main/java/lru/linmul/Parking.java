@@ -40,6 +40,12 @@ public class Parking {
     public int getOccupancy() {
         return this.occupancy;
     }
+    public double getYlat() {
+        return this.ylat;
+    }
+    public double getXlong() {
+        return this.xlong;
+    }
 
     public String toString() {
         return "Parking{" +

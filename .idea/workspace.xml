@@ -5,16 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceab7915-2a7f-469f-8116-92983afaae30" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/lru/linmul/map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Parking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/Parking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/SceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lru/linmul/scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lru/linmul/Scene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lru/linmul/SceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lru/linmul/SceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/lru/linmul/Scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lru/linmul/Scene.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -32,10 +41,12 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "5-interface-simplifiée",
     "kotlin-language-version-configured": "true",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -46,10 +57,10 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="lru.linmul.Main" />
       <module name="parkingLR" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-21.0.5\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-21.0.5\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -73,7 +84,8 @@
       <updated>1735040158640</updated>
       <workItem from="1735040165282" duration="5352000" />
       <workItem from="1735048938960" duration="2382000" />
-      <workItem from="1735059649715" duration="18905000" />
+      <workItem from="1735059649715" duration="26208000" />
+      <workItem from="1735134145864" duration="7782000" />
     </task>
     <servers />
   </component>
