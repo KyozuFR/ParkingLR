@@ -38,7 +38,7 @@
          </columns>
       </TableView>
 
-      <Button layoutX="543.0" layoutY="294.0" onAction="#importCSVFile" style="-fx-background-color: #4eb8ff;" text="Importer CSV" />
+      <Button layoutX="543.0" layoutY="294.0" onAction="#handleImportButton" style="-fx-background-color: #4eb8ff;" text="Importer CSV" />
       <Label fx:id="filePathLabel" layoutX="14.0" layoutY="298.0" prefHeight="17.0" prefWidth="516.0" text="Aucun fichier sélectionné" />
    </children>
 </AnchorPane>

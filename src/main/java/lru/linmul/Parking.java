@@ -47,6 +47,10 @@ public class Parking {
         return this.xlong;
     }
 
+    public static void clearParkings() {
+        parkings.clear();
+    }
+
     public String toString() {
         return "Parking{" +
                 "id=" + id +

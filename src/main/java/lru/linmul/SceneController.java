@@ -1,6 +1,5 @@
 package lru.linmul;
 
-import com.sun.javafx.webkit.WebConsoleListener;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +17,12 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class SceneController {
     @FXML private AnchorPane anchorPane;
     @FXML private TextField parkingField;
@@ -31,7 +36,7 @@ public class SceneController {
     @FXML private TableColumn<Parking, Integer> totalPlaceColumn;
     @FXML private Label filePathLabel;
 
-    private WebEngine webEngine;
+    private WebEngine webEngine = null;
     private File file = null;
     private Parking parkings = null;
     private String parkingNameToSort = "";
@@ -58,7 +63,7 @@ public class SceneController {
             }
         });
 
-        // Injecter un script pour rediriger console.log
+        // Quand la page html est executé
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
                 webEngine.executeScript(
@@ -66,6 +71,8 @@ public class SceneController {
                                 "    alert(message);" +
                                 "};"
                 );
+
+                importCSVFile();
             }
         });
 
@@ -80,6 +87,11 @@ public class SceneController {
     @FXML
     private void handleParkingNameFilter() {
         parkingNameToSort = parkingField.getText();
+
+        if ( lessOccupied.isSelected() || mostOccupied.isSelected() ) {
+            all.setSelected( true );
+        }
+
         handleRadioFilter(); // vérifie si des radios boutons sont selectionnés pour afficher les parkings correspondants
     }
 
@@ -90,31 +102,74 @@ public class SceneController {
         if ( all.isSelected() ) {
             handleDataView( parkingNameToSort );
         } else if ( lessOccupied.isSelected() ) {
+            parkingNameToSort = "";
+            parkingField.setText( "" );
+
             Parking lessOccupiedParking = parkings.getLessOccupied();
-            handleDataViewWR( lessOccupiedParking );
-            //handleDataView(lessOccupiedParking.getName());
+
+            handleDataViewWithoutRegex( lessOccupiedParking );
         } else if ( mostOccupied.isSelected() ) {
+            parkingNameToSort = "";
+            parkingField.setText( "" );
+
             Parking mostOccupiedParking = parkings.getMostOccupied();
-            handleDataViewWR( mostOccupiedParking );
-            //handleDataView(mostOccupiedParking.getName());
+
+            handleDataViewWithoutRegex( mostOccupiedParking );
         }
     }
 
     @FXML
-    private void importCSVFile() {
-        if ( file != null ) { return; } // Pour éviter les problèmes de duplications (à modifier si on veut importer d'autres fichiers)
-
+    private void handleImportButton() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter( "CSV Files", "*.csv" ) );
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
 
-        file = fileChooser.showOpenDialog( null );
+        file = fileChooser.showOpenDialog(null);
+
+        if ( file == null ) { return; }
+
+        Path dirPath = Paths.get("src/main/resources/lru/linmul/");
+        try {
+            Files.list(dirPath)
+                    .filter(path -> path.toString().endsWith(".csv"))
+                    .forEach(path -> {
+                        try {
+                            Files.delete(path);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+            Path filePath = dirPath.resolve( file.getName() );
+            Files.copy(file.toPath(), filePath);
+            file = filePath.toFile();
+
+            importCSVFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void importCSVFile( ) {
+        Path dirPath = Paths.get("src/main/resources/lru/linmul/");
+
+        try {
+            file = Files.list(dirPath)
+                    .filter(path -> path.toString().endsWith(".csv"))
+                    .map(Path::toFile)
+                    .findFirst()
+                    .orElse(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if ( file != null ) {
-            String filePath = file.getPath();
-            filePathLabel.setText( "Fichier selectionné: " + filePath );
+            String filePathName = file.getPath();
+            filePathLabel.setText( "Fichier selectionné: " + filePathName );
+
+            Parking.clearParkings();
 
             // peupler la liste des parkings
-            CSV csv = new CSV( filePath );
+            CSV csv = new CSV( filePathName );
             for ( String[] row : csv.readAll() ) {
                 parkings = new Parking(
                         row[0],
@@ -134,7 +189,7 @@ public class SceneController {
         }
     }
 
-    private void handleDataView(String parkingNameToSort) {
+    private void handleDataView( String parkingNameToSort ) {
         if ( file == null ) { return; }
 
         ObservableList<Parking> viewTableParkingsList = FXCollections.observableArrayList();
@@ -154,17 +209,16 @@ public class SceneController {
         parkingTableView.setItems(viewTableParkingsList);
     }
 
-    private void handleDataViewWR(Parking parking) {
-        //DataView Without Regex
+    private void handleDataViewWithoutRegex( Parking parking ) {
         if ( file == null ) { return; }
+
         clearParkingsMarkers();
 
         ObservableList<Parking> viewTableParkingsList = FXCollections.observableArrayList();
-
-
-
         viewTableParkingsList.add( parking );
+
         addParkingMarkerToMap( parking );
+
         parkingTableView.setItems(viewTableParkingsList);
     }
 
@@ -180,7 +234,7 @@ public class SceneController {
         webEngine.executeScript( script );
     }
 
-    private void addParkingMarkerToMap(Parking parking) {
+    private void addParkingMarkerToMap( Parking parking ) {
         String script = String.format(
                 Locale.US,
                 "addMarker(%f, %f, '%s: (%d/%d) places')",
@@ -202,7 +256,7 @@ public class SceneController {
         webEngine.executeScript( script );
     }
 
-    private void selectTableRowByCoordinates(String parkingName) {
+    private void selectTableRowByCoordinates( String parkingName ) {
         Parking parking = parkings.searchParking( parkingName );
 
         if ( parkings.searchParking( parkingName ) != null ) {
