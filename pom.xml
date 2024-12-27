@@ -11,14 +11,16 @@
         <project.organization.name>Cerise sans Malediction</project.organization.name>
         <project.inceptionYear>2024</project.inceptionYear>
         <project.description>Visualiser les parkings de La Rochelle</project.description>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <organization>
         <name>Cerise sans Malediction</name>
     </organization>
 
-    <inceptionYear>2023</inceptionYear>
-    <description>Parking management system</description>
+    <inceptionYear>2024</inceptionYear>
+    <description>Visualiser les parkings de La Rochelle</description>
 
     <dependencies>
         <!-- Dépendance OpenCSV -->
@@ -71,6 +73,16 @@
                 </configuration>
             </plugin>
 
+            <!-- Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>8</release>
+                </configuration>
+            </plugin>
+
             <!-- Assembly Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -114,6 +126,7 @@
                 <configuration>
                     <outfile>${project.build.directory}/${project.artifactId}.exe</outfile>
                     <jar>${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar</jar>
+                    <icon>${project.basedir}/src/main/resources/lru/linmul/lru.ico</icon>
                     <dontWrapJar>false</dontWrapJar>
                     <headerType>gui</headerType>
                     <classPath>
@@ -122,11 +135,11 @@
                     <jre>
                         <path>C:\Program Files\Java\jre1.8.0_421</path>
                         <minVersion>1.8.0</minVersion>
-                        <bundledJre64Bit>true</bundledJre64Bit>
+                        <requires64Bit>true</requires64Bit>
                     </jre>
                     <versionInfo>
                         <productName>${project.artifactId}</productName>
-                        <fileDescription>${project.name}</fileDescription>
+                        <fileDescription>${project.description}</fileDescription>
                         <companyName>${project.organization.name}</companyName>
                     </versionInfo>
                 </configuration>
