@@ -1,0 +1,12 @@
+/* src/main/resources/lru/linmul/styles.css */
+.root {
+    -fx-font-family: "Arial";
+}
+
+.button {
+    -fx-background-color: #4eb8ff;
+}
+
+.label {
+    -fx-text-fill: #333333;
+}
