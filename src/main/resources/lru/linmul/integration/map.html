@@ -20,7 +20,11 @@
         L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             minZoom: 11,
+            updateWhenIdle: false,
+            reuseTiles: true,
         }).addTo( map );
+
+        map.invalidateSize();
     }
 
     function addMarker( lat, lng, popupText ) {
