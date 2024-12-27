@@ -8,12 +8,17 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>23</maven.compiler.source>
-        <maven.compiler.target>23</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.version>21.0.5</javafx.version>
-        <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+        <project.organization.name>Cerise sans Malediction</project.organization.name>
+        <project.inceptionYear>2024</project.inceptionYear>
+        <project.description>Visualiser les parkings de La Rochelle</project.description>
     </properties>
+
+    <organization>
+        <name>Cerise sans Malediction</name>
+    </organization>
+
+    <inceptionYear>2023</inceptionYear>
+    <description>Parking management system</description>
 
     <dependencies>
         <!-- Dépendance OpenCSV -->
@@ -26,35 +31,107 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>${javafx.version}</version>
+            <version>21.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>${javafx.version}</version>
+            <version>21.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
-            <version>${javafx.version}</version>
+            <version>21.0.5</version>
         </dependency>
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
         <plugins>
+            <!-- JavaFx Plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>${javafx.maven.plugin.version}</version>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jlink</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <mainClass>lru.linmul.Main</mainClass>
+                    <stripDebug>true</stripDebug>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <noManPages>true</noManPages>
+                    <launcher>
+                        <name>parkingLR</name>
+                    </launcher>
+                    <jlinkImageName>parkingLR-image</jlinkImageName>
+                </configuration>
+            </plugin>
+
+            <!-- Assembly Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>lru.linmul.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Launch4J Plugin -->
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>create-exe-from-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <outfile>${project.build.directory}/${project.artifactId}.exe</outfile>
+                    <jar>${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar</jar>
+                    <dontWrapJar>false</dontWrapJar>
+                    <headerType>gui</headerType>
+                    <classPath>
+                        <mainClass>lru.linmul.Main</mainClass>
+                    </classPath>
+                    <jre>
+                        <path>C:\Program Files\Java\jre1.8.0_421</path>
+                        <minVersion>1.8.0</minVersion>
+                        <bundledJre64Bit>true</bundledJre64Bit>
+                    </jre>
+                    <versionInfo>
+                        <productName>${project.artifactId}</productName>
+                        <fileDescription>${project.name}</fileDescription>
+                        <companyName>${project.organization.name}</companyName>
+                    </versionInfo>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>

@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     public static void main(String[] args) {
+        System.out.println("Hello World");
         /**CSV csv = new CSV("C:/users/amaur/Downloads/od_parking_dispo.csv");
         Parking parking = null;
         for (String[] row : csv.readAll()) {
