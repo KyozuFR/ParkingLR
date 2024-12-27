@@ -11,12 +11,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
-import java.io.File;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,7 +50,7 @@ public class SceneController {
 
         // charger la carte
         webEngine = mapView.getEngine();
-        webEngine.load(Objects.requireNonNull(getClass().getResource("/lru/linmul/map.html")).toExternalForm());
+        webEngine.load(Objects.requireNonNull(getClass().getResource("/lru/linmul/integration/map.html")).toExternalForm());
 
         webEngine.setOnAlert(event -> {
             String data = event.getData();
@@ -127,7 +126,8 @@ public class SceneController {
 
         if ( file == null ) { return; }
 
-        Path dirPath = Paths.get("src/main/resources/lru/linmul/");
+        Path dirPath = Paths.get(".");
+
         try {
             Files.list(dirPath)
                     .filter(path -> path.toString().endsWith(".csv"))
@@ -150,7 +150,7 @@ public class SceneController {
     }
 
     private void importCSVFile( ) {
-        Path dirPath = Paths.get("src/main/resources/lru/linmul/");
+        Path dirPath = Paths.get(".");
 
         try {
             file = Files.list(dirPath)
@@ -164,13 +164,20 @@ public class SceneController {
 
         if ( file != null ) {
             String filePathName = file.getPath();
-            filePathLabel.setText( "Fichier selectionné: " + filePathName );
+            String fileName = file.getName();
+            filePathLabel.setText( "Fichier selectionné: " + fileName );
 
             Parking.clearParkings();
 
             // peupler la liste des parkings
             CSV csv = new CSV( filePathName );
-            for ( String[] row : csv.readAll() ) {
+            List<String[]> csvData = null;
+            try {
+                csvData = csv.readAll();
+            } finally {
+                csv.close();
+            }
+            for ( String[] row : csvData ) {
                 parkings = new Parking(
                         row[0],
                         row[1],
@@ -237,12 +244,11 @@ public class SceneController {
     private void addParkingMarkerToMap( Parking parking ) {
         String script = String.format(
                 Locale.US,
-                "addMarker(%f, %f, '%s: (%d/%d) places')",
+                "addMarker(%f, %f, '%s: %d paces libres')",
                 parking.getYlat(),
                 parking.getXlong(),
                 parking.getName(),
-                parking.getOccupancy(),
-                parking.getCapacity()
+                parking.getOccupancy()
         );
         webEngine.executeScript(script);
     }

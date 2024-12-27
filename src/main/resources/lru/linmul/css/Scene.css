@@ -1,0 +1,39 @@
+.root {
+    -fx-font-family: "Arial";
+}
+
+.label {
+    -fx-text-fill: #333333;
+}
+
+#header {
+    -fx-background-color: #94d4ff;
+}
+
+.button {
+    -fx-background-color: #4eb8ff;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #2dabff;
+}
+
+.text-field {
+    -fx-background-radius: 5px;
+}
+
+.cell:hover {
+    -fx-background-color: #4eb8ff;
+    -fx-text-fill: #333333 !important;
+}
+
+.cell:selected, .cell:selected:focused {
+    -fx-background-color: #94d4ff;
+    -fx-text-fill: #333333 !important;
+}
+
+.cell:focused {
+    -fx-background-color: #94d4ff;
+    -fx-text-fill: #333333 !important;
+}
