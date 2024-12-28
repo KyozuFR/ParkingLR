@@ -15,7 +15,9 @@ ParkingLR is a JavaFX application that allows users to manage and visualize park
     cd ParkingLR
     ```
 
-2. Build the project using Maven:
+2. Update the path of the JRE in the **pom.xml** file to match the JRE path on your system (line 136).
+
+3. Build the project using Maven:
     ```sh
     mvn clean install
     ```
@@ -42,4 +44,4 @@ ParkingLR is a JavaFX application that allows users to manage and visualize park
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
