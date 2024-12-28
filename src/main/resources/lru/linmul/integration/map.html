@@ -21,10 +21,31 @@
             maxZoom: 19,
             minZoom: 11,
             updateWhenIdle: false,
-            reuseTiles: true,
+            keepBuffer: 4,
+            detectRetina: true,
+            updateWhenZooming: false,
+            fadeAnimation: false,
         }).addTo( map );
 
-        map.invalidateSize();
+        map.on('zoomend', function() {
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.TileLayer) {
+                    layer.redraw();
+                }
+            });
+        });
+
+        let redrawTimeout;
+        map.on('moveend', function() {
+            clearTimeout(redrawTimeout);
+            redrawTimeout = setTimeout(function() {
+                map.eachLayer(function(layer) {
+                    if (layer instanceof L.TileLayer) {
+                        layer.redraw();
+                    }
+                });
+            }, 200);
+        });
     }
 
     function addMarker( lat, lng, popupText ) {
