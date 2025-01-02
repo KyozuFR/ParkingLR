@@ -11,7 +11,7 @@ ParkingLR is a JavaFX application that allows users to manage and visualize park
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/ParkingLR.git
+    git clone https://github.com/KyozuFR/ParkingLR.git
     cd ParkingLR
     ```
 
